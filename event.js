@@ -25,9 +25,9 @@ var Event = function(window,document){
 	var Exports = {
 		unbind : function() {  
 			if ( document.removeEventListener ) {  
-				return function( elem, type ) {  
+				return function( elem, type, handler ) {  
 					if ( (elem && !elem.length) || elem === window ) {  
-						var handler = Cache.get(elem, type);
+						var handler = handler || Cache.get(elem, type);
 						elem.removeEventListener(type, handler, false );  
 					}  
 					else if ( elem && elem.length ) {  
@@ -39,9 +39,9 @@ var Event = function(window,document){
 				};  
 			}  
 			else if ( document.detachEvent ) {  
-				return function ( elem, type ) {  
+				return function ( elem, type, handler ) {  
 					if ( (elem && !elem.length) || elem === window ) {  
-						var handler = Cache.get(elem, type);
+						var handler = handler || Cache.get(elem, type);
 						elem.detachEvent( 'on' + type, handler );  
 					}  
 					else if ( elem.length ) {  
@@ -83,7 +83,34 @@ var Event = function(window,document){
 					}  
 				};  
 			}  
-		}()
+		}(),
+		hover : function(el, inCallback,outCallback){
+		
+			var inFunc = function(event){
+
+				Exports.one(el,'mouseout',outFunc);
+				inCallback && inCallback(event);
+			};
+
+			var outFunc = function(event){
+
+				Exports.one(el,'mouseover',inFunc);
+				outCallback && outCallback(event);
+			};
+
+			Exports.one(el,'mouseover',inFunc);
+
+		},
+		one : function(el,type,callback){
+		
+			var inFunc = function(event){
+				Exports.unbind(el,type,inFunc);
+				callback && callback(event);
+			};
+
+			Exports.bind(el,type,inFunc);
+
+		}
 	};
 
 	var bindings = ['blur','change','click','dblclick','focus','keydown','keypress','keyup','load','mousedown','mouseenter','mouseleave','mouseover','mouseout','mouseup','resize','scroll','submit'];
