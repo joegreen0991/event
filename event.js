@@ -64,7 +64,7 @@ var Event = function(window,document){
 					else if ( elem && elem.length ) {  
 						var len = elem.length;  
 						for ( var i = 0; i < len; i++ ) {  
-							Exports.addEvent( elem[i], type, handler );  
+							Exports.bind( elem[i], type, handler );  
 						}  
 					}  
 				};  
@@ -78,7 +78,7 @@ var Event = function(window,document){
 					else if ( elem.length ) {  
 						var len = elem.length;  
 						for ( var i = 0; i < len; i++ ) {  
-							Exports.addEvent( elem[i], type, handler );  
+							Exports.bind( elem[i], type, handler );  
 						}  
 					}  
 				};  
