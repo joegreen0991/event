@@ -33,7 +33,7 @@ var Event = function(window,document){
 					else if ( elem && elem.length ) {  
 						var len = elem.length;  
 						for ( var i = 0; i < len; i++ ) {  
-							Exports.removeEvent( elem[i], type );  
+							Exports.unbind( elem[i], type );  
 						}  
 					}  
 				};  
@@ -47,7 +47,7 @@ var Event = function(window,document){
 					else if ( elem.length ) {  
 						var len = elem.length;  
 						for ( var i = 0; i < len; i++ ) {  
-							Exports.removeEvent( elem[i], type );  
+							Exports.unbind( elem[i], type );  
 						}  
 					}  
 				};  
